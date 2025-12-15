@@ -3,7 +3,7 @@ import Company from "@/db/models/Company";
 
 export default async function handler(request, response) {
   await dbConnect();
-  if (response.method === "GET") {
+  if (request.method === "GET") {
     const companies = await Company.find();
     response.status(200).json(companies);
     return;
