@@ -1,9 +1,11 @@
-export default function TaskCard({ task }) {
+export default function TaskCard({ task, clients }) {
+  const client = clients.find((client) => client._id === task.clientId);
   return (
     <div>
       <h3>{task.title}</h3>
-      <p>Has been assigned to: client name</p>
-      <p>Status: {task.status}</p>
+      <p>
+        Client: {client ? client.name : "No client assigned - please add one"}
+      </p>
     </div>
   );
 }
