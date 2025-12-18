@@ -1,3 +1,4 @@
+import TaskList from "@/components/Tasks/TaskList";
 import useSWR from "swr";
 
 export default function DashboardPage() {
@@ -11,6 +12,7 @@ export default function DashboardPage() {
   return (
     <>
       <h1>Dashboard</h1>
+      <TaskList tasks={tasks} />
     </>
   );
 }
