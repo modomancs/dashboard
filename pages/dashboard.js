@@ -22,7 +22,7 @@ export default function DashboardPage() {
   return (
     <>
       <h1>Dashboard</h1>
-      <TaskList tasks={tasks} clients={}/>
+      <TaskList tasks={tasks} clients={clients} />
     </>
   );
 }
