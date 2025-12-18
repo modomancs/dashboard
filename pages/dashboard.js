@@ -12,18 +12,13 @@ export default function DashboardPage() {
     error: clientsError,
     isLoading: clientsLoading,
   } = useSWR("/api/clients");
-  if (tasksError) {
-    return <p>Failed to load tasks...</p>;
+  if (tasksError || clientsError) {
+    return <p>Failed to load data...</p>;
   }
-  if (tasksLoading) {
-    return <p>Loading tasks...</p>;
+  if (tasksLoading || clientsLoading) {
+    return <p>Loading data...</p>;
   }
-  if (clientsError) {
-    return <p>Failed to load clients...</p>;
-  }
-  if (clientsLoading) {
-    return <p>Loading clients...</p>;
-  }
+
   return (
     <>
       <h1>Dashboard</h1>
