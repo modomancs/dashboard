@@ -8,5 +8,10 @@ export default async function handler(request, response) {
     response.status(200).json(clients);
     return;
   }
+  if (request.method === "POST") {
+    const clientData = request.body;
+    const newClient = await Client.create(clientData);
+    response.status(201).json(newClient);
+  }
   response.status(405).json({ message: "Method not allowed" });
 }
