@@ -1,3 +1,4 @@
+import ClientList from "@/components/Clients/ClientList";
 import CreateClientForm from "@/components/Clients/CreateClientForm";
 import CreateTaskForm from "@/components/Tasks/CreateTaskForm";
 import TaskList from "@/components/Tasks/TaskList";
@@ -31,6 +32,7 @@ export default function DashboardPage() {
       <h1>Dashboard</h1>
       <CreateClientForm companies={companies} />
       <CreateTaskForm companies={companies} clients={clients} />
+      <ClientList clients={clients} tasks={tasks} />
       <TaskList tasks={tasks} clients={clients} />
     </>
   );
