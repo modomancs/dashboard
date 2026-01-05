@@ -42,7 +42,7 @@ export default function CreateTaskForm({ companies, clients }) {
 
         <label htmlFor="description">
           Description
-          <textarea id="description" name="description" rows={4} />
+          <textarea id="description" name="description" rows={5} />
         </label>
 
         <label htmlFor="status">

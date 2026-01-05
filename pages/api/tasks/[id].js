@@ -9,5 +9,12 @@ export default async function handler(request, response) {
     response.status(200).json(task);
     return;
   }
+  if (request.method === "PUT") {
+    const updatedTask = await Task.findByIdAndUpdate(id, request.body, {
+      new: true,
+    });
+    response.status(200).json(updatedTask);
+    return;
+  }
   response.status(405).json({ message: "Method not allowed" });
 }

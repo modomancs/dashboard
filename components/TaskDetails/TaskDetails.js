@@ -13,15 +13,22 @@ export default function TaskDetails({ task, clients, companies }) {
 
   async function handleStatusUpdate(event) {
     event.preventDefault();
+
     const formData = new FormData(event.target);
     const statusData = Object.fromEntries(formData);
-    await fetch(`/api/tasks/${task._id}`, {
+
+    const response = await fetch(`/api/tasks/${task._id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(statusData),
     });
 
-    mutate();
+    if (!response.ok) {
+      return;
+    }
+
+    mutate(`/api/tasks/${task._id}`);
+    mutate("/api/tasks");
   }
   return (
     <>
