@@ -32,7 +32,7 @@ export default function DashboardPage() {
       <h1>Dashboard</h1>
       <CreateClientForm companies={companies} />
       <CreateTaskForm companies={companies} clients={clients} />
-      <ClientList clients={clients} tasks={tasks} />
+      <ClientList clients={clients} />
       <TaskList tasks={tasks} clients={clients} />
     </>
   );
