@@ -12,7 +12,7 @@ const companySchema = new Schema({
     lowercase: true,
     trim: true,
   },
-  passwordHash: {
+  encryptedPassword: {
     type: String,
     required: true,
   },

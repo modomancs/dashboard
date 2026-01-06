@@ -12,21 +12,31 @@ export default async function handler(request, response) {
   if (request.method === "POST") {
     const { name, email, password } = request.body;
 
-    const existingCompany = await Company.findOne({
-      email: email.toLowerCase(),
-    });
+    if (!name || !email || !password) {
+      response
+        .status(400)
+        .json({ message: "name, email and password are required" });
+      return;
+    }
+
+    const normalizedEmail = email.toLowerCase();
+
+    const existingCompany = await Company.findOne({ email: normalizedEmail });
     if (existingCompany) {
       response.status(409).json({ message: "Email already in use" });
       return;
     }
+
     const encryptedPassword = await bcrypt.hash(password, 10);
+
     const createdCompany = await Company.create({
       name,
-      email: email.toLowerCase(),
+      email: normalizedEmail,
       encryptedPassword,
       createdAt: new Date(),
     });
-    response.status(201).json(createdCompany);
+
+    response.status(201).json({ id: createdCompany._id });
     return;
   }
   response.status(405).json({ message: "Method not allowed" });
