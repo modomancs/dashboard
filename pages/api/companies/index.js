@@ -1,5 +1,6 @@
 import dbConnect from "@/db/connect";
 import Company from "@/db/models/Company";
+import bcrypt from "bcryptjs";
 
 export default async function handler(request, response) {
   await dbConnect();
