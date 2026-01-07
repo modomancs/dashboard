@@ -5,6 +5,11 @@ export default function CreateTaskForm({ companies, clients }) {
   const { mutate } = useSWR("/api/tasks");
   const [submitError, setSubmitError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [selectedCompanyId, setSelectedCompanyId] = useState("");
+
+  const filteredClients = selectedCompanyId
+    ? clients.filter((client) => client.companyId === selectedCompanyId)
+    : [];
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -29,6 +34,7 @@ export default function CreateTaskForm({ companies, clients }) {
     setSuccessMessage("Task has been created!");
     mutate();
     event.target.reset();
+    setSelectedCompanyId("");
   }
 
   return (
@@ -56,7 +62,13 @@ export default function CreateTaskForm({ companies, clients }) {
 
         <label htmlFor="companyId">
           Company
-          <select id="companyId" name="companyId" required>
+          <select
+            id="companyId"
+            name="companyId"
+            value={selectedCompanyId}
+            onChange={(event) => setSelectedCompanyId(event.target.value)}
+            required
+          >
             <option value="">Select company</option>
             {companies?.map((company) => (
               <option key={company._id} value={company._id}>
@@ -68,11 +80,18 @@ export default function CreateTaskForm({ companies, clients }) {
 
         <label htmlFor="clientId">
           Client
-          <select id="clientId" name="clientId" required>
-            <option value="">Select Client</option>
-            {clients?.map((client) => (
-              <option key={client._id} value={client._id}>
-                {client.name}
+          <select
+            id="clientId"
+            name="clientId"
+            disabled={!selectedCompanyId}
+            required
+          >
+            <option value="">
+              {selectedCompanyId ? "Select client" : "Select company"}
+            </option>
+            {filteredClients.map((filteredClient) => (
+              <option key={filteredClient._id} value={filteredClient._id}>
+                {filteredClient.name}
               </option>
             ))}
           </select>
