@@ -1,5 +1,7 @@
 import dbConnect from "@/db/connect";
 import Task from "@/db/models/Task";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]";
 
 export default async function handler(request, response) {
   await dbConnect();
@@ -10,7 +12,15 @@ export default async function handler(request, response) {
     return;
   }
   if (request.method === "POST") {
-    const taskData = request.body;
+    const session = await getServerSession(request, response, authOptions);
+    if (!session?.companyId) {
+      response.status(401).json({ message: "Unauthorized" });
+      return;
+    }
+    const taskData = {
+      ...request.body,
+      companyId: session.companyId,
+    };
     const createdTask = await Task.create(taskData);
     response.status(201).json(createdTask);
     return;
