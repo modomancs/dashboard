@@ -1,15 +1,21 @@
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 import useSWR from "swr";
 
-export default function CreateClientForm({ companies }) {
+export default function CreateClientForm() {
   const { mutate } = useSWR("/api/clients");
   const [submitError, setSubmitError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const { data: session } = useSession();
 
   async function handleSubmit(event) {
     event.preventDefault();
     setSubmitError("");
     setSuccessMessage("");
+    if (!session?.companyId) {
+      setSubmitError("You must be logged in.");
+      return;
+    }
     const formData = new FormData(event.target);
     const clientData = Object.fromEntries(formData);
     clientData.createdAt = new Date().toISOString();
@@ -34,17 +40,7 @@ export default function CreateClientForm({ companies }) {
           Client Name
           <input id="name" name="name" type="text" required />
         </label>
-        <label htmlFor="companyId">
-          Company
-          <select id="companyId" name="companyId" required>
-            <option value="">Select company</option>
-            {companies?.map((company) => (
-              <option key={company._id} value={company._id}>
-                {company.name}
-              </option>
-            ))}
-          </select>
-        </label>
+
         <button type="submit">Submit</button>
         {submitError && <p>{submitError}</p>}
         {successMessage && <p>{successMessage}</p>}
