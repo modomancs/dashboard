@@ -1,5 +1,4 @@
 import {
-  Button,
   Card,
   Description,
   LiList,
@@ -8,6 +7,7 @@ import {
   ULList,
   Wrapper,
 } from "@/components/HomePageStyles/StyledHomePage";
+import Link from "next/link";
 
 export default function HomePage() {
   return (
@@ -26,7 +26,8 @@ export default function HomePage() {
           <LiList>View detailed task information</LiList>
           <LiList>Filter tasks by client and status</LiList>
         </ULList>
-        <Button>Go to Dashboard</Button>
+        <Link href="/login">Login</Link>
+        <Link href="/register">Register</Link>
       </Card>
     </Wrapper>
   );

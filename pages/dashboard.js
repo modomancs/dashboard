@@ -15,12 +15,12 @@ export default function DashboardPage() {
     data: tasks,
     error: tasksError,
     isLoading: tasksLoading,
-  } = useSWR("/api/tasks");
+  } = useSWR(session ? "/api/tasks" : null);
   const {
     data: clients,
     error: clientsError,
     isLoading: clientsLoading,
-  } = useSWR("/api/clients");
+  } = useSWR(session ? "/api/clients" : null);
 
   useEffect(() => {
     if (status === "unauthenticated") {
