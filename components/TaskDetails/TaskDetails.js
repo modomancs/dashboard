@@ -1,4 +1,4 @@
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Edit } from "lucide-react";
 import TaskCard from "../Tasks/TaskCard";
 import { useRouter } from "next/router";
 import { mutate } from "swr";
@@ -11,22 +11,16 @@ export default function TaskDetails({ task, clients, companies }) {
 
   const date = new Date(task.createdAt).toLocaleString();
 
-  async function handleStatusUpdate(event) {
+  async function hanldeTaskUpdate(event) {
     event.preventDefault();
-
     const formData = new FormData(event.target);
-    const statusData = Object.fromEntries(formData);
-
+    const updateData = Object.fromEntries(formData);
     const response = await fetch(`/api/tasks/${task._id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(statusData),
+      body: JSON.stringify(updateData),
     });
-
-    if (!response.ok) {
-      return;
-    }
-
+    if (!response.ok) return;
     mutate(`/api/tasks/${task._id}`);
     mutate("/api/tasks");
   }
@@ -44,9 +38,15 @@ export default function TaskDetails({ task, clients, companies }) {
   return (
     <>
       <ArrowLeft onClick={() => router.back()} />
-      <TaskCard task={task} clients={clients} />
+
+      <EditableItem onSubmit={hanldeTaskUpdate} display={<h1>{task.title}</h1>}>
+        <label htmlFor="title">Title: </label>
+        <input id="title" name="title" defaultValue={task.title} required />
+        <button type="submit">Save</button>
+      </EditableItem>
+
       <EditableItem
-        onSubmit={handleStatusUpdate}
+        onSubmit={hanldeTaskUpdate}
         display={<p>Status: {task.status}</p>}
       >
         <label htmlFor="status">Update status:</label>
@@ -59,8 +59,24 @@ export default function TaskDetails({ task, clients, companies }) {
         <button type="submit">Save</button>
       </EditableItem>
 
-      <strong>Description: </strong>
-      <p>{task.description}</p>
+      <EditableItem
+        onSubmit={hanldeTaskUpdate}
+        display={
+          <>
+            <strong>Description: </strong>
+            <p>{task.description}</p>
+          </>
+        }
+      >
+        <label htmlFor="description">Description</label>
+        <textarea
+          id="description"
+          name="description"
+          defaultValue={task.description}
+          rows={5}
+        />
+        <button type="submit">Save</button>
+      </EditableItem>
       <p>
         <strong>Client: </strong>
         {client ? client.name : "No client assigned"}
