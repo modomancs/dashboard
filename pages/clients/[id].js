@@ -3,6 +3,7 @@ import useSWR, { mutate } from "swr";
 
 import { ArrowLeft } from "lucide-react";
 import TaskList from "@/components/Tasks/TaskList";
+import { useState } from "react";
 
 export default function ClientPage() {
   const router = useRouter();
@@ -48,12 +49,31 @@ export default function ClientPage() {
     mutate("/api/clients");
     router.push("/dashboard");
   }
-
+  async function handleClientUpdate(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const clientData = Object.fromEntries(formData);
+    const response = await fetch(`/api/clients/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(clientData),
+    });
+    if (!response.ok) return;
+    mutate(`/api/clients/${id}`);
+    mutate("/api/clients");
+  }
   return (
     <div>
       <ArrowLeft onClick={() => router.back()} />
 
-      <h1>{client.name}</h1>
+      <EditableItem
+        onSubmit={handleClientUpdate}
+        display={<h1>{client.name}</h1>}
+      >
+        <label htmlFor="name">Client name:</label>
+        <input id="name" name="name" defaultValue={client.name} required />
+        <button type="submit">Save</button>
+      </EditableItem>
 
       <p>Total: {clientTasks.length}</p>
       <p>Todo: {todoCount}</p>
@@ -64,6 +84,41 @@ export default function ClientPage() {
 
       <button type="button" onClick={handleClientDelete}>
         Delete Client
+      </button>
+    </div>
+  );
+}
+
+function EditableItem({ children, display, onSubmit }) {
+  const [toggleEdit, setToggleEdit] = useState(false);
+
+  const closeEdit = () => setToggleEdit(false);
+
+  const handleSubmit = async (event) => {
+    if (onSubmit) {
+      await onSubmit(event);
+      closeEdit();
+    }
+  };
+
+  if (toggleEdit) {
+    return (
+      <>
+        <form onSubmit={handleSubmit}>{children}</form>
+
+        <button type="button" onClick={closeEdit}>
+          Cancel
+        </button>
+      </>
+    );
+  }
+
+  return (
+    <div>
+      {display}
+
+      <button type="button" onClick={() => setToggleEdit(true)}>
+        Edit
       </button>
     </div>
   );

@@ -2,16 +2,12 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 import useSWR from "swr";
 
-export default function CreateTaskForm({ companies, clients }) {
+export default function CreateTaskForm({ clients }) {
   const { mutate } = useSWR("/api/tasks");
   const [submitError, setSubmitError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const [selectedCompanyId, setSelectedCompanyId] = useState("");
-  const { data: session } = useSession();
 
-  const filteredClients = selectedCompanyId
-    ? clients.filter((client) => client.companyId === selectedCompanyId)
-    : [];
+  const { data: session } = useSession();
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -69,18 +65,11 @@ export default function CreateTaskForm({ companies, clients }) {
 
         <label htmlFor="clientId">
           Client
-          <select
-            id="clientId"
-            name="clientId"
-            disabled={!selectedCompanyId}
-            required
-          >
-            <option value="">
-              {selectedCompanyId ? "Select client" : "Select company"}
-            </option>
-            {filteredClients.map((filteredClient) => (
-              <option key={filteredClient._id} value={filteredClient._id}>
-                {filteredClient.name}
+          <select id="clientId" name="clientId" required>
+            <option value="">Select Client</option>
+            {clients?.map((client) => (
+              <option key={client._id} value={client._id}>
+                {client.name}
               </option>
             ))}
           </select>
