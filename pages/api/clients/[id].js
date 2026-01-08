@@ -29,5 +29,13 @@ export default async function handler(request, response) {
     response.status(200).json({ message: "Client has been deleted" });
     return;
   }
+  if (request.method === "PUT") {
+    const { companyId, createdAt, ...updateData } = request.body;
+    const updateClient = await Client.findByIdAndUpdate(id, updateData, {
+      new: true,
+    });
+    response.status(200).json(updateClient);
+    return;
+  }
   response.status(405).json({ message: "Method not allowed" });
 }
