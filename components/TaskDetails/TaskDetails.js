@@ -77,10 +77,32 @@ export default function TaskDetails({ task, clients, companies }) {
         />
         <button type="submit">Save</button>
       </EditableItem>
-      <p>
-        <strong>Client: </strong>
-        {client ? client.name : "No client assigned"}
-      </p>
+
+      <EditableItem
+        onSubmit={hanldeTaskUpdate}
+        display={
+          <p>
+            <strong>Client: </strong>
+            {client ? client.name : "No client assigned"}
+          </p>
+        }
+      >
+        <label htmlFor="clientId">Client: </label>
+        <select
+          id="clientId"
+          name="clientId"
+          defaultValue={task.clientId}
+          required
+        >
+          <option value="">Select client</option>
+          {clients?.map((client) => (
+            <option key={client._id} value={client._id}>
+              {client.name}
+            </option>
+          ))}
+        </select>
+        <button type="submit">Save</button>
+      </EditableItem>
       <p>
         <strong>Company: </strong>
         {company ? company.name : "Unknown Company"}
