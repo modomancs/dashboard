@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 
 import { ArrowLeft } from "lucide-react";
 import TaskList from "@/components/Tasks/TaskList";
@@ -38,6 +38,17 @@ export default function ClientPage() {
   ).length;
   const doneCount = clientTasks.filter((task) => task.status === "done").length;
 
+  async function handleClientDelete() {
+    const response = await fetch(`/api/clients/${id}`, {
+      method: "DELETE",
+    });
+    if (!response.ok) {
+      return;
+    }
+    mutate("/api/clients");
+    router.push("/dashboard");
+  }
+
   return (
     <div>
       <ArrowLeft onClick={() => router.back()} />
@@ -50,6 +61,10 @@ export default function ClientPage() {
       <p>Done: {doneCount}</p>
 
       <TaskList tasks={clientTasks} clients={clients} />
+
+      <button type="button" onClick={handleClientDelete}>
+        Delete Client
+      </button>
     </div>
   );
 }
