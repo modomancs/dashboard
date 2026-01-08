@@ -1,3 +1,4 @@
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 import useSWR from "swr";
 
@@ -6,6 +7,7 @@ export default function CreateTaskForm({ companies, clients }) {
   const [submitError, setSubmitError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [selectedCompanyId, setSelectedCompanyId] = useState("");
+  const { data: session } = useSession();
 
   const filteredClients = selectedCompanyId
     ? clients.filter((client) => client.companyId === selectedCompanyId)
@@ -16,9 +18,15 @@ export default function CreateTaskForm({ companies, clients }) {
     setSubmitError("");
     setSuccessMessage("");
 
+    if (!session?.companyId) {
+      setSubmitError("You must be logged in.");
+      return;
+    }
+
     const formData = new FormData(event.target);
     const taskData = Object.fromEntries(formData);
     taskData.createdAt = new Date().toISOString();
+    taskData.companyId = session.companyId;
 
     const response = await fetch("/api/tasks", {
       method: "POST",
@@ -34,7 +42,6 @@ export default function CreateTaskForm({ companies, clients }) {
     setSuccessMessage("Task has been created!");
     mutate();
     event.target.reset();
-    setSelectedCompanyId("");
   }
 
   return (
@@ -57,24 +64,6 @@ export default function CreateTaskForm({ companies, clients }) {
             <option value="todo">To Do</option>
             <option value="in_progress">In Progress</option>
             <option value="done">Done</option>
-          </select>
-        </label>
-
-        <label htmlFor="companyId">
-          Company
-          <select
-            id="companyId"
-            name="companyId"
-            value={selectedCompanyId}
-            onChange={(event) => setSelectedCompanyId(event.target.value)}
-            required
-          >
-            <option value="">Select company</option>
-            {companies?.map((company) => (
-              <option key={company._id} value={company._id}>
-                {company.name}
-              </option>
-            ))}
           </select>
         </label>
 

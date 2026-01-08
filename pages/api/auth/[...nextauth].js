@@ -4,7 +4,7 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 
-export default NextAuth({
+export const authOptions = {
   session: { strategy: "jwt" },
   providers: [
     CredentialsProvider({
@@ -47,4 +47,5 @@ export default NextAuth({
       return session;
     },
   },
-});
+};
+export default NextAuth(authOptions);
