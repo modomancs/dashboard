@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 
 import { ArrowLeft } from "lucide-react";
 import TaskList from "@/components/Tasks/TaskList";
