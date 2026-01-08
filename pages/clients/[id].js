@@ -3,12 +3,14 @@ import useSWR, { mutate } from "swr";
 
 import { ArrowLeft } from "lucide-react";
 import TaskList from "@/components/Tasks/TaskList";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 
 export default function ClientPage() {
   const router = useRouter();
   const { id } = router.query;
 
+  const { data: session, status } = useSession();
   const {
     data: client,
     error: clientError,
@@ -26,6 +28,15 @@ export default function ClientPage() {
     error: clientsError,
     isLoading: clientsLoading,
   } = useSWR("/api/clients");
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/login");
+    }
+  }, [status, router]);
+
+  if (status === "loading") return <p>Loading...</p>;
+  if (!session) return null;
 
   if (clientLoading || tasksLoading || clientsLoading) return <p>Loading...</p>;
   if (clientError || tasksError || clientsError)
