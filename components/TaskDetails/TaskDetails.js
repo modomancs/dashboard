@@ -30,6 +30,17 @@ export default function TaskDetails({ task, clients, companies }) {
     mutate(`/api/tasks/${task._id}`);
     mutate("/api/tasks");
   }
+
+  async function handleTaskDelete() {
+    const response = await fetch(`/api/tasks/${task._id}`, {
+      method: "DELETE",
+    });
+    if (!response.ok) {
+      return;
+    }
+    mutate("/api/tasks");
+    router.push("/dashboard");
+  }
   return (
     <>
       <ArrowLeft onClick={() => router.back()} />
@@ -60,6 +71,9 @@ export default function TaskDetails({ task, clients, companies }) {
       </p>
 
       <p>{date}</p>
+      <button type="button" onClick={handleTaskDelete}>
+        Delete Task
+      </button>
     </>
   );
 }
