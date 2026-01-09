@@ -42,6 +42,7 @@ export default function DashboardPage() {
   return (
     <>
       <h1>Dashboard</h1>
+      <Link href="/tasks/new-task">Create a new Task</Link>
       <Link href="/clients">Manage Clients</Link>
       <TaskList tasks={tasks} clients={clients} />
     </>
