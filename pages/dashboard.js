@@ -1,6 +1,3 @@
-import ClientList from "@/components/Clients/ClientList";
-import CreateClientForm from "@/components/Clients/CreateClientForm";
-import CreateTaskForm from "@/components/Tasks/CreateTaskForm";
 import TaskList from "@/components/Tasks/TaskList";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
