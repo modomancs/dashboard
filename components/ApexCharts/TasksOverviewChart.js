@@ -1,6 +1,6 @@
-const { default: dynamic } = require("next/dynamic");
+import dynamic from "next/dynamic";
 
-const reactApexChart = dynamic(() => import("react-apexcharts"), {
+const ReactApexChart = dynamic(() => import("react-apexcharts"), {
   ssr: false,
 });
 
@@ -9,5 +9,36 @@ export default function TasksOverviewChart({ tasks }) {
   const inProgressCount = tasks.filter(
     (task) => task.status === "in_progress"
   ).length;
-  const doneCount = task.filter((task) => task.status === "done").length;
+  const doneCount = tasks.filter((task) => task.status === "done").length;
+
+  const series = [todoCount, inProgressCount, doneCount];
+
+  const options = {
+    chart: {
+      type: "pie",
+    },
+    labels: ["To Do", "In Progress", "Done"],
+    colors: ["#ef4444", "#f59e0b", "#22c55e"],
+    legend: {
+      position: "bottom",
+      formatter: (seriesName, opts) => {
+        return `${seriesName}: ${opts.w.globals.series[opts.seriesIndex]}`;
+      },
+    },
+    dataLabels: {
+      enabled: true,
+    },
+  };
+
+  return (
+    <div>
+      <h2>Tasks overview</h2>
+      <ReactApexChart
+        options={options}
+        series={series}
+        type="pie"
+        height={300}
+      />
+    </div>
+  );
 }
