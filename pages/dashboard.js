@@ -3,6 +3,7 @@ import CreateClientForm from "@/components/Clients/CreateClientForm";
 import CreateTaskForm from "@/components/Tasks/CreateTaskForm";
 import TaskList from "@/components/Tasks/TaskList";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import useSWR from "swr";
@@ -41,9 +42,8 @@ export default function DashboardPage() {
   return (
     <>
       <h1>Dashboard</h1>
-      <CreateClientForm />
-      <CreateTaskForm clients={clients} />
-      <ClientList clients={clients} />
+      <Link href="/tasks/new-task">Create a new Task</Link>
+      <Link href="/clients">Manage Clients</Link>
       <TaskList tasks={tasks} clients={clients} />
     </>
   );
