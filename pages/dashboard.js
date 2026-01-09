@@ -1,7 +1,6 @@
-import ClientList from "@/components/Clients/ClientList";
-import CreateClientForm from "@/components/Clients/CreateClientForm";
-import CreateTaskForm from "@/components/Tasks/CreateTaskForm";
+import TasksOverviewChart from "@/components/ApexCharts/TasksOverviewChart";
 import TaskList from "@/components/Tasks/TaskList";
+import { Users } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -42,6 +41,7 @@ export default function DashboardPage() {
   return (
     <>
       <h1>Dashboard</h1>
+      <TasksOverviewChart tasks={tasks} />
       <Link href="/tasks/new-task">Create a new Task</Link>
       <Link href="/clients">Manage Clients</Link>
       <TaskList tasks={tasks} clients={clients} />
