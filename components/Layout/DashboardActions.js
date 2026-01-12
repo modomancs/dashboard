@@ -7,7 +7,7 @@ export default function DashboardActions() {
     <ActionsDiv>
       <Link href="/tasks/new-task">
         <ActionsButton>
-          <PlusCircleIcon size={20} />
+          <PlusCircleIcon size={22} />
           Create Task
         </ActionsButton>
       </Link>
