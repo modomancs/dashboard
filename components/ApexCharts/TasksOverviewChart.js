@@ -37,7 +37,7 @@ export default function TasksOverviewChart({ tasks }) {
         options={options}
         series={series}
         type="pie"
-        height={300}
+        height={360}
       />
     </div>
   );

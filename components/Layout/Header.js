@@ -1,19 +1,39 @@
 import { signOut, useSession } from "next-auth/react";
-import Link from "next/link";
+import {
+  AccountBox,
+  Brand,
+  CompanyName,
+  HeaderButton,
+  HeaderInner,
+  HeaderLinkButton,
+  HeaderWrapper,
+  Right,
+} from "./StyledHeader";
 
 export default function Header() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  const isLoggedIn = status === "authenticated";
+
   return (
-    <header>
-      <Link href="/dashboard">Task Manager</Link>
-      {session && (
-        <div>
-          <span>{session.companyName}</span>
-          <button type="button" onClick={() => signOut({ callbackUrl: "/" })}>
-            Logout
-          </button>
-        </div>
-      )}
-    </header>
+    <HeaderWrapper>
+      <HeaderInner>
+        <Brand href={isLoggedIn ? "/dashboard" : "/"}>Task Manager</Brand>
+        <Right>
+          {isLoggedIn ? (
+            <AccountBox>
+              <CompanyName>{session.companyName}</CompanyName>
+              <HeaderButton type="button" onClick={() => signOut()}>
+                Logout
+              </HeaderButton>
+            </AccountBox>
+          ) : (
+            <>
+              <HeaderLinkButton href="/login">Login</HeaderLinkButton>
+              <HeaderLinkButton href="/register">Register</HeaderLinkButton>
+            </>
+          )}
+        </Right>
+      </HeaderInner>
+    </HeaderWrapper>
   );
 }

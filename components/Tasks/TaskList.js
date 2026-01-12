@@ -1,3 +1,11 @@
+import {
+  Column,
+  ColumnHeader,
+  ColumnList,
+  ColumnTitle,
+  CountBadge,
+  Dot,
+} from "./StyledTaskColumns";
 import TaskCard from "./TaskCard";
 
 export default function TaskList({ tasks, clients }) {
@@ -5,19 +13,49 @@ export default function TaskList({ tasks, clients }) {
   const inProgressTasks = tasks.filter((task) => task.status === "in_progress");
   const doneTasks = tasks.filter((task) => task.status === "done");
   return (
-    <div>
-      <h2>To-Do</h2>
-      {todoTasks.map((task) => (
-        <TaskCard key={task._id} task={task} clients={clients} />
-      ))}
-      <h2>In Progress</h2>
-      {inProgressTasks.map((task) => (
-        <TaskCard key={task._id} task={task} clients={clients} />
-      ))}
-      <h2>Done</h2>
-      {doneTasks.map((task) => (
-        <TaskCard key={task._id} task={task} clients={clients} />
-      ))}
-    </div>
+    <>
+      <Column>
+        <ColumnHeader>
+          <ColumnTitle>
+            <Dot $color="#ef4444" />
+            To-Do
+          </ColumnTitle>
+          <CountBadge>{todoTasks.length}</CountBadge>
+        </ColumnHeader>
+        <ColumnList>
+          {todoTasks.map((task) => (
+            <TaskCard key={task._id} task={task} clients={clients} />
+          ))}
+        </ColumnList>
+      </Column>
+      <Column>
+        <ColumnHeader>
+          <ColumnTitle>
+            <Dot $color="#f59e0b" />
+            In Progress
+          </ColumnTitle>
+          <CountBadge>{inProgressTasks.length}</CountBadge>
+        </ColumnHeader>
+        <ColumnList>
+          {inProgressTasks.map((task) => (
+            <TaskCard key={task._id} task={task} clients={clients} />
+          ))}
+        </ColumnList>
+      </Column>
+      <Column>
+        <ColumnHeader>
+          <ColumnTitle>
+            <Dot $color="#22c55e" />
+            Done
+          </ColumnTitle>
+          <CountBadge>{doneTasks.length}</CountBadge>
+        </ColumnHeader>
+        <ColumnList>
+          {doneTasks.map((task) => (
+            <TaskCard key={task._id} task={task} clients={clients} />
+          ))}
+        </ColumnList>
+      </Column>
+    </>
   );
 }
