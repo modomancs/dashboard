@@ -1,18 +1,23 @@
 import { PlusCircleIcon, UserCircle } from "lucide-react";
 import Link from "next/link";
+import { ActionsButton, ActionsDiv } from "./StyledDashboardActions";
 
 export default function DashboardActions() {
   return (
-    <>
+    <ActionsDiv>
       <Link href="/tasks/new-task">
-        <PlusCircleIcon size={20} />
-        Create Task
+        <ActionsButton>
+          <PlusCircleIcon size={20} />
+          Create Task
+        </ActionsButton>
       </Link>
 
       <Link href="/clients">
-        <UserCircle size={22} />
-        Clients
+        <ActionsButton>
+          <UserCircle size={22} />
+          Clients
+        </ActionsButton>
       </Link>
-    </>
+    </ActionsDiv>
   );
 }
