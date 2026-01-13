@@ -2,6 +2,7 @@ import {
   Column,
   ColumnHeader,
   ColumnList,
+  ColumnsGrid,
   ColumnTitle,
   CountBadge,
   Dot,
@@ -13,7 +14,7 @@ export default function TaskList({ tasks, clients }) {
   const inProgressTasks = tasks.filter((task) => task.status === "in_progress");
   const doneTasks = tasks.filter((task) => task.status === "done");
   return (
-    <>
+    <ColumnsGrid>
       <Column>
         <ColumnHeader>
           <ColumnTitle>
@@ -56,6 +57,6 @@ export default function TaskList({ tasks, clients }) {
           ))}
         </ColumnList>
       </Column>
-    </>
+    </ColumnsGrid>
   );
 }

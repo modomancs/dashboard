@@ -3,18 +3,14 @@ import Link from "next/link";
 
 export const TaskCardLink = styled(Link)`
   display: block;
-  padding: 12px;
+  padding: 10px;
   border-radius: 12px;
-
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
-
   color: rgba(255, 255, 255, 0.92);
   text-decoration: none;
-
   transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease,
     border-color 120ms ease;
-
   &:hover {
     transform: translateY(-2px);
     background: rgba(255, 255, 255, 0.06);
