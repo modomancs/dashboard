@@ -48,7 +48,6 @@ export default function DashboardPage() {
     <PageShell>
       <PageContainer>
         <DashboardWrapper>
-          <DashboardActions />
           <TopSection>
             <Card>
               <DashboardActions />

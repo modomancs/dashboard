@@ -28,15 +28,22 @@ export const BottomSection = styled.section`
 `;
 
 export const Card = styled.div`
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 14px;
   padding: 24px;
-
   width: 100%;
   max-width: 520px;
-
   display: flex;
   justify-content: center;
   align-items: center;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+`;
+
+export const CardTitle = styled.h2`
+  margin: 0 0 16px;
+  font-size: 18px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.92);
+  text-align: center;
 `;
