@@ -162,9 +162,9 @@ export default function ClientPage() {
 }
 
 function EditableItem({ children, display, onSubmit }) {
-  const [toggleEdit, setToggleEdit] = useState(false);
+  const [editMode, setEditMode] = useState(false);
 
-  const closeEdit = () => setToggleEdit(false);
+  const closeEdit = () => setEditMode(false);
 
   const handleSubmit = async (event) => {
     if (onSubmit) {
@@ -173,7 +173,7 @@ function EditableItem({ children, display, onSubmit }) {
     }
   };
 
-  if (toggleEdit) {
+  if (editMode) {
     return (
       <>
         <ClientsInlineForm onSubmit={handleSubmit}>
@@ -192,7 +192,7 @@ function EditableItem({ children, display, onSubmit }) {
     <div>
       {display}
 
-      <ClientsEditButton type="button" onClick={() => setToggleEdit(true)}>
+      <ClientsEditButton type="button" onClick={() => setEditMode(true)}>
         Edit
       </ClientsEditButton>
     </div>

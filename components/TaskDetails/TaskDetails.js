@@ -169,9 +169,9 @@ export default function TaskDetails({ task, clients, companies }) {
 }
 
 function EditableItem({ children, display, onSubmit }) {
-  const [toggleEdit, setToggleEdit] = useState(false);
+  const [editMode, setEditMode] = useState(false);
 
-  const closeEdit = () => setToggleEdit(false);
+  const closeEdit = () => setEditMode(false);
 
   const handleSubmit = async (event) => {
     if (onSubmit) {
@@ -180,7 +180,7 @@ function EditableItem({ children, display, onSubmit }) {
     }
   };
 
-  if (toggleEdit) {
+  if (editMode) {
     return (
       <>
         <InlineForm onSubmit={handleSubmit}>{children}</InlineForm>
@@ -197,7 +197,7 @@ function EditableItem({ children, display, onSubmit }) {
     <div>
       {display}
 
-      <EditButton type="button" onClick={() => setToggleEdit(true)}>
+      <EditButton type="button" onClick={() => setEditMode(true)}>
         Edit
       </EditButton>
     </div>
