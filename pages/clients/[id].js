@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import useSWR, { mutate } from "swr";
-
 import { ArrowLeft } from "lucide-react";
 import TaskList from "@/components/Tasks/TaskList";
 import { useEffect, useState } from "react";
@@ -26,6 +25,8 @@ import {
   ClientsTopBar,
 } from "@/components/Clients/StyledClientsDetails";
 import { PageContainer, PageShell } from "@/components/Layout/StyledPageShell";
+import PageLoading from "@/components/Loading/PageLoading";
+import PageError from "@/components/Feedback/PageError";
 
 export default function ClientPage() {
   const router = useRouter();
@@ -56,12 +57,11 @@ export default function ClientPage() {
     }
   }, [status, router]);
 
-  if (status === "loading") return <p>Loading...</p>;
-  if (!session) return null;
+  if (status === "loading") return <PageLoading />;
+  if (!session) return <PageLoading />;
 
-  if (clientLoading || tasksLoading || clientsLoading) return <p>Loading...</p>;
-  if (clientError || tasksError || clientsError)
-    return <p>Error loading data</p>;
+  if (clientLoading || tasksLoading || clientsLoading) return <PageLoading />;
+  if (clientError || tasksError || clientsError) return <PageError />;
 
   const clientTasks = tasks.filter((task) => task.clientId === id);
 

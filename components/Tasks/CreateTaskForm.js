@@ -1,6 +1,19 @@
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import useSWR from "swr";
+import {
+  NewTaskButtonRow,
+  NewTaskErrorMessage,
+  NewTaskField,
+  NewTaskForm,
+  NewTaskFormCard,
+  NewTaskInput,
+  NewTaskMessage,
+  NewTaskPrimaryButton,
+  NewTaskSelect,
+  NewTaskTextarea,
+  NewTaskTitle,
+} from "./StyledCreateTaskForm";
 
 export default function CreateTaskForm({ clients }) {
   const { mutate } = useSWR("/api/tasks");
@@ -41,45 +54,49 @@ export default function CreateTaskForm({ clients }) {
   }
 
   return (
-    <div>
-      <h2>Create Task</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="title">
+    <NewTaskFormCard>
+      <NewTaskTitle>Create Task</NewTaskTitle>
+      <NewTaskForm onSubmit={handleSubmit}>
+        <NewTaskField htmlFor="title">
           Title
-          <input type="text" id="title" name="title" required />
-        </label>
+          <NewTaskInput type="text" id="title" name="title" required />
+        </NewTaskField>
 
-        <label htmlFor="description">
+        <NewTaskField htmlFor="description">
           Description
-          <textarea id="description" name="description" rows={5} />
-        </label>
+          <NewTaskTextarea id="description" name="description" rows={5} />
+        </NewTaskField>
 
-        <label htmlFor="status">
+        <NewTaskField htmlFor="status">
           Status
-          <select id="status" name="status" defaultValue="todo" required>
+          <NewTaskSelect id="status" name="status" defaultValue="todo" required>
             <option value="todo">To Do</option>
             <option value="in_progress">In Progress</option>
             <option value="done">Done</option>
-          </select>
-        </label>
+          </NewTaskSelect>
+        </NewTaskField>
 
-        <label htmlFor="clientId">
+        <NewTaskField htmlFor="clientId">
           Client
-          <select id="clientId" name="clientId" required>
+          <NewTaskSelect id="clientId" name="clientId" required>
             <option value="">Select Client</option>
             {clients?.map((client) => (
               <option key={client._id} value={client._id}>
                 {client.name}
               </option>
             ))}
-          </select>
-        </label>
+          </NewTaskSelect>
+        </NewTaskField>
 
-        <button type="submit">Submit</button>
+        <NewTaskButtonRow>
+          <NewTaskPrimaryButton type="submit">Submit</NewTaskPrimaryButton>
+        </NewTaskButtonRow>
 
-        {submitError && <p>{submitError}</p>}
-        {successMessage && <p>{successMessage}</p>}
-      </form>
-    </div>
+        {submitError && (
+          <NewTaskErrorMessage>{submitError}</NewTaskErrorMessage>
+        )}
+        {successMessage && <NewTaskMessage>{successMessage}</NewTaskMessage>}
+      </NewTaskForm>
+    </NewTaskFormCard>
   );
 }

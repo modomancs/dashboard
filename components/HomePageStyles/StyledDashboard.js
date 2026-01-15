@@ -21,16 +21,14 @@ export const TopSection = styled.section`
 export const BottomSection = styled.section`
   margin-top: 16px;
 `;
-
 export const Card = styled.div`
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 14px;
   padding: 24px;
-
   width: 100%;
+  display: block;
 `;
-
 export const CardTitle = styled.h2`
   margin: 0 0 16px;
   font-size: 18px;

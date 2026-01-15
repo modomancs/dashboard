@@ -43,7 +43,7 @@ export default function CreateClientForm() {
   }
   return (
     <>
-      <ClientFormTitle>Create client</ClientFormTitle>
+      <ClientFormTitle>Create a new client</ClientFormTitle>
       <ClientForm onSubmit={handleSubmit}>
         <ClientLabel htmlFor="name">
           Client Name

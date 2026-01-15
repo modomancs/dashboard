@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { TaskCardLink, TaskMeta, TaskTitle } from "./StyledTaskCard";
 
 export default function TaskCard({ task, clients }) {

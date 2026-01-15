@@ -1,3 +1,4 @@
+import EmptyState from "../Feedback/EmptyState";
 import {
   List,
   ListTitle,
@@ -7,7 +8,7 @@ import {
 } from "./StyledClientList";
 
 export default function ClientList({ clients }) {
-  if (!clients || clients.length === 0) return <p>No clients yet.</p>;
+  if (!clients || clients.length === 0) return <EmptyState />;
 
   return (
     <div>

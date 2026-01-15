@@ -1,4 +1,5 @@
 import TasksOverviewChart from "@/components/ApexCharts/TasksOverviewChart";
+import PageError from "@/components/Feedback/PageError";
 import {
   BottomSection,
   Card,
@@ -7,6 +8,7 @@ import {
 } from "@/components/HomePageStyles/StyledDashboard";
 import DashboardActions from "@/components/Layout/DashboardActions";
 import { PageContainer, PageShell } from "@/components/Layout/StyledPageShell";
+import PageLoading from "@/components/Loading/PageLoading";
 import TaskList from "@/components/Tasks/TaskList";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -34,14 +36,14 @@ export default function DashboardPage() {
     }
   }, [status, router]);
 
-  if (status === "loading") return <p>Loading...</p>;
-  if (!session) return null;
+  if (status === "loading") return <PageLoading />;
+  if (!session) return <PageLoading />;
 
   if (tasksError || clientsError) {
-    return <p>Failed to load data...</p>;
+    return <PageError />;
   }
   if (tasksLoading || clientsLoading) {
-    return <p>Loading data...</p>;
+    return <PageLoading />;
   }
 
   return (
