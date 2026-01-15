@@ -5,6 +5,27 @@ import { ArrowLeft } from "lucide-react";
 import TaskList from "@/components/Tasks/TaskList";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
+import {
+  ClientsBackButton,
+  ClientsButtonRow,
+  ClientsDeleteButton,
+  ClientsDetailsPage,
+  ClientsEditButton,
+  ClientsGhostButton,
+  ClientsGlassCard,
+  ClientsInlineForm,
+  ClientsInput,
+  ClientsLabel,
+  ClientsMeta,
+  ClientsPrimaryButton,
+  ClientsStatCard,
+  ClientsStatLabel,
+  ClientsStatsRow,
+  ClientsStatValue,
+  ClientsTitle,
+  ClientsTopBar,
+} from "@/components/Clients/StyledClientsDetails";
+import { PageContainer, PageShell } from "@/components/Layout/StyledPageShell";
 
 export default function ClientPage() {
   const router = useRouter();
@@ -74,29 +95,69 @@ export default function ClientPage() {
     mutate("/api/clients");
   }
   return (
-    <div>
-      <ArrowLeft onClick={() => router.back()} />
+    <PageShell>
+      <PageContainer>
+        <ClientsDetailsPage>
+          <ClientsTopBar>
+            <ClientsBackButton type="button" onClick={() => router.back()}>
+              <ArrowLeft size={18} /> Back
+            </ClientsBackButton>
+          </ClientsTopBar>
 
-      <EditableItem
-        onSubmit={handleClientUpdate}
-        display={<h1>{client.name}</h1>}
-      >
-        <label htmlFor="name">Client name:</label>
-        <input id="name" name="name" defaultValue={client.name} required />
-        <button type="submit">Save</button>
-      </EditableItem>
+          <ClientsGlassCard>
+            <EditableItem
+              onSubmit={handleClientUpdate}
+              display={
+                <>
+                  <ClientsTitle>{client.name}</ClientsTitle>
+                  <ClientsMeta>
+                    Tasks assigned to this client are shown below.
+                  </ClientsMeta>
+                </>
+              }
+            >
+              <ClientsLabel htmlFor="name">Client name</ClientsLabel>
+              <ClientsInput
+                id="name"
+                name="name"
+                defaultValue={client.name}
+                required
+              />
+              <ClientsButtonRow>
+                <ClientsPrimaryButton type="submit">Save</ClientsPrimaryButton>
+              </ClientsButtonRow>
+            </EditableItem>
+          </ClientsGlassCard>
 
-      <p>Total: {clientTasks.length}</p>
-      <p>Todo: {todoCount}</p>
-      <p>In Progress: {inProgressCount}</p>
-      <p>Done: {doneCount}</p>
+          <ClientsStatsRow>
+            <ClientsStatCard>
+              <ClientsStatValue>{clientTasks.length}</ClientsStatValue>
+              <ClientsStatLabel>Total</ClientsStatLabel>
+            </ClientsStatCard>
+            <ClientsStatCard>
+              <ClientsStatValue>{todoCount}</ClientsStatValue>
+              <ClientsStatLabel>To Do</ClientsStatLabel>
+            </ClientsStatCard>
+            <ClientsStatCard>
+              <ClientsStatValue>{inProgressCount}</ClientsStatValue>
+              <ClientsStatLabel>In Progress</ClientsStatLabel>
+            </ClientsStatCard>
+            <ClientsStatCard>
+              <ClientsStatValue>{doneCount}</ClientsStatValue>
+              <ClientsStatLabel>Done</ClientsStatLabel>
+            </ClientsStatCard>
+          </ClientsStatsRow>
 
-      <TaskList tasks={clientTasks} clients={clients} />
+          <ClientsGlassCard>
+            <TaskList tasks={clientTasks} clients={clients} />
+          </ClientsGlassCard>
 
-      <button type="button" onClick={handleClientDelete}>
-        Delete Client
-      </button>
-    </div>
+          <ClientsDeleteButton type="button" onClick={handleClientDelete}>
+            Delete Client
+          </ClientsDeleteButton>
+        </ClientsDetailsPage>
+      </PageContainer>
+    </PageShell>
   );
 }
 
@@ -115,11 +176,14 @@ function EditableItem({ children, display, onSubmit }) {
   if (toggleEdit) {
     return (
       <>
-        <form onSubmit={handleSubmit}>{children}</form>
-
-        <button type="button" onClick={closeEdit}>
-          Cancel
-        </button>
+        <ClientsInlineForm onSubmit={handleSubmit}>
+          {children}
+        </ClientsInlineForm>
+        <ClientsButtonRow>
+          <ClientsGhostButton type="button" onClick={closeEdit}>
+            Cancel
+          </ClientsGhostButton>
+        </ClientsButtonRow>
       </>
     );
   }
@@ -128,9 +192,9 @@ function EditableItem({ children, display, onSubmit }) {
     <div>
       {display}
 
-      <button type="button" onClick={() => setToggleEdit(true)}>
+      <ClientsEditButton type="button" onClick={() => setToggleEdit(true)}>
         Edit
-      </button>
+      </ClientsEditButton>
     </div>
   );
 }

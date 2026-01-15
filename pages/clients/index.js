@@ -1,7 +1,14 @@
 import ClientList from "@/components/Clients/ClientList";
 import CreateClientForm from "@/components/Clients/CreateClientForm";
+import {
+  ClientsWrapper,
+  GlassCard,
+  Hint,
+  HintLink,
+  Stack,
+} from "@/components/Clients/StyledClientsPage";
+import { PageContainer, PageShell } from "@/components/Layout/StyledPageShell";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import useSWR from "swr";
@@ -27,13 +34,23 @@ export default function ClientsPage() {
   if (clientsError) return <p>Failed to load clients.</p>;
 
   return (
-    <>
-      <h1>Clients</h1>
-      <CreateClientForm />
-      <ClientList clients={clients} />
-      <p>
-        Dont have a task? Click <Link href="/tasks/new-task">here</Link>
-      </p>
-    </>
+    <PageShell>
+      <PageContainer>
+        <ClientsWrapper>
+          <Stack>
+            <GlassCard>
+              <CreateClientForm />
+            </GlassCard>
+            <GlassCard>
+              <ClientList clients={clients} />
+            </GlassCard>
+            <Hint>
+              Dont have a task? Click{" "}
+              <HintLink href="/tasks/new-task">here</HintLink>
+            </Hint>
+          </Stack>
+        </ClientsWrapper>
+      </PageContainer>
+    </PageShell>
   );
 }

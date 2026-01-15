@@ -1,3 +1,4 @@
+import { PageContainer, PageShell } from "@/components/Layout/StyledPageShell";
 import TaskDetails from "@/components/TaskDetails/TaskDetails";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -41,5 +42,11 @@ export default function TaskDetailsPage() {
   if (taskError || clientsError || companiesError) {
     return <p>Failed to load data...</p>;
   }
-  return <TaskDetails task={task} clients={clients} companies={companies} />;
+  return (
+    <PageShell>
+      <PageContainer>
+        <TaskDetails task={task} clients={clients} companies={companies} />
+      </PageContainer>
+    </PageShell>
+  );
 }

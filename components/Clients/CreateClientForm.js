@@ -1,6 +1,15 @@
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import useSWR from "swr";
+import {
+  ClientErrorMessage,
+  ClientForm,
+  ClientFormTitle,
+  ClientInput,
+  ClientLabel,
+  ClientMessage,
+  ClientPrimaryButton,
+} from "./Styled.ClientForm";
 
 export default function CreateClientForm() {
   const { mutate } = useSWR("/api/clients");
@@ -33,18 +42,18 @@ export default function CreateClientForm() {
     event.target.reset();
   }
   return (
-    <div>
-      <h2>Create client</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="name">
+    <>
+      <ClientFormTitle>Create client</ClientFormTitle>
+      <ClientForm onSubmit={handleSubmit}>
+        <ClientLabel htmlFor="name">
           Client Name
-          <input id="name" name="name" type="text" required />
-        </label>
+          <ClientInput id="name" name="name" type="text" required />
+        </ClientLabel>
 
-        <button type="submit">Submit</button>
-        {submitError && <p>{submitError}</p>}
-        {successMessage && <p>{successMessage}</p>}
-      </form>
-    </div>
+        <ClientPrimaryButton type="submit">Submit</ClientPrimaryButton>
+        {submitError && <ClientErrorMessage>{submitError}</ClientErrorMessage>}
+        {successMessage && <ClientMessage>{successMessage}</ClientMessage>}
+      </ClientForm>
+    </>
   );
 }

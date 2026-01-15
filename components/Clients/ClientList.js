@@ -1,15 +1,28 @@
-import Link from "next/link";
+import {
+  List,
+  ListTitle,
+  ClientItem,
+  ClientMeta,
+  ClientName,
+} from "./StyledClientList";
 
 export default function ClientList({ clients }) {
+  if (!clients || clients.length === 0) return <p>No clients yet.</p>;
+
   return (
     <div>
-      <h2>Clients</h2>
+      <ListTitle>Clients</ListTitle>
 
-      {clients.map((client) => (
-        <div key={client._id}>
-          <Link href={`/clients/${client._id}`}>{client.name}</Link>
-        </div>
-      ))}
+      <List>
+        {clients.map((client) => (
+          <ClientItem key={client._id} href={`/clients/${client._id}`}>
+            <div>
+              <ClientName>{client.name}</ClientName>
+              <ClientMeta>Click to view details</ClientMeta>
+            </div>
+          </ClientItem>
+        ))}
+      </List>
     </div>
   );
 }
