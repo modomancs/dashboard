@@ -37,8 +37,7 @@ export default function NewTaskPage() {
           <NewTaskPageTitle>Create a new Task</NewTaskPageTitle>
           <CreateTaskForm clients={clients} />
           <NewTaskHint>
-            Dont have a client yet? Click{" "}
-            <HintLink href="/clients">here</HintLink>
+            Add a new client? Click <HintLink href="/clients">here</HintLink>
           </NewTaskHint>
         </NewTaskWrapper>
       </PageContainer>
