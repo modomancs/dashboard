@@ -36,7 +36,7 @@ export default function TaskDetailsPage() {
   }, [status, router]);
 
   if (status === "loading") return <PageLoading />;
-  if (!session) return null;
+  if (!session) return <PageLoading />;
 
   if (taskLoading || clientsLoading || companiesLoading) {
     return <PageLoading />;

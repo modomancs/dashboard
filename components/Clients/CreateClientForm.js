@@ -9,7 +9,7 @@ import {
   ClientLabel,
   ClientMessage,
   ClientPrimaryButton,
-} from "./Styled.ClientForm";
+} from "./StyledClientForm";
 
 export default function CreateClientForm() {
   const { mutate } = useSWR("/api/clients");
