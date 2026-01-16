@@ -1,83 +1,83 @@
+import Link from "next/link";
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
-  min-height: 100vh;
-  padding: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #f5f6f8;
+export const HomeWrapper = styled.div`
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 16px;
 `;
-
-export const Card = styled.div`
-  background: white;
-  padding: 48px;
-  border-radius: 14px;
-  max-width: 600px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
-  @media (max-width: 768px) {
-    padding: 36px;
-  }
-  @media (max-width: 480px) {
-    padding: 24px;
-  }
+export const HomeCard = styled.div`
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 22px;
+  display: grid;
+  gap: 14px;
 `;
-export const Title = styled.h1`
-  font-size: 44px;
-  margin-bottom: 16px;
-  @media (max-width: 768px) {
-    font-size: 36px;
-  }
-  @media (max-width: 480px) {
-    font-size: 30px;
+export const HomeTitle = styled.h1`
+  margin: 0;
+  font-size: 28px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.92);
+  @media (max-width: 520px) {
+    font-size: 24px;
   }
 `;
-
-export const Description = styled.p`
-  font-size: 16px;
-  line-height: 1.6;
-  color: #555;
-  margin-bottom: 28px;
-  @media (max-width: 480px) {
-    font-size: 15px;
-  }
+export const HomeDescription = styled.p`
+  margin: 8px 0 0 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.86);
 `;
-
-export const SectionTitle = styled.h2`
-  font-size: 20px;
-  margin-bottom: 12px;
-  @media (max-width: 480px) {
-    font-size: 18px;
-  }
-`;
-
-export const ULList = styled.ul`
+export const HomeList = styled.ul`
+  margin: 0;
   padding-left: 18px;
-  margin-bottom: 32px;
+  display: grid;
+  gap: 10px;
 `;
-export const LiList = styled.li`
-  margin-bottom: 10px;
-  font-size: 15px;
-  color: #333;
-  @media (max-width: 480px) {
-    font-size: 14px;
+export const HomeListItem = styled.li`
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.75);
+`;
+export const HomeActions = styled.div`
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  @media (min-width: 520px) {
+    grid-template-columns: 1fr 1fr;
+  }
+`;
+export const HomePrimaryLink = styled(Link)`
+  display: block;
+  text-align: center;
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.92);
+  text-decoration: none;
+  &:hover {
+    background: rgba(255, 255, 255, 0.18);
   }
 `;
 
-export const Button = styled.button`
-  width: 100%;
-  background: #111;
-  color: white;
-  border: none;
-  padding: 14px 22px;
-  border-radius: 10px;
-  font-size: 15px;
-  cursor: pointer;
+export const HomeSecondaryLink = styled(Link)`
+  display: block;
+  text-align: center;
+  padding: 12px;
+  border-radius: 12px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
   &:hover {
-    opacity: 0.9;
+    background: rgba(255, 255, 255, 0.06);
   }
-  @media (max-width: 480px) {
-    padding: 14px;
-    font-size: 14px;
-  }
+`;
+export const HomeSectionTitle = styled.h2`
+  margin: 8px 0 0 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.86);
 `;

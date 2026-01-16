@@ -1,9 +1,16 @@
 import TasksOverviewChart from "@/components/ApexCharts/TasksOverviewChart";
+import PageError from "@/components/Feedback/PageError";
+import {
+  BottomSection,
+  Card,
+  DashboardWrapper,
+  TopSection,
+} from "@/components/HomePageStyles/StyledDashboard";
 import DashboardActions from "@/components/Layout/DashboardActions";
+import { PageContainer, PageShell } from "@/components/Layout/StyledPageShell";
+import PageLoading from "@/components/Loading/PageLoading";
 import TaskList from "@/components/Tasks/TaskList";
-import { Users } from "lucide-react";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import useSWR from "swr";
@@ -29,22 +36,33 @@ export default function DashboardPage() {
     }
   }, [status, router]);
 
-  if (status === "loading") return <p>Loading...</p>;
-  if (!session) return null;
+  if (status === "loading") return <PageLoading />;
+  if (!session) return <PageLoading />;
 
   if (tasksError || clientsError) {
-    return <p>Failed to load data...</p>;
+    return <PageError />;
   }
   if (tasksLoading || clientsLoading) {
-    return <p>Loading data...</p>;
+    return <PageLoading />;
   }
 
   return (
-    <>
-      <h1>Dashboard</h1>
-      <DashboardActions />
-      <TasksOverviewChart tasks={tasks} />
-      <TaskList tasks={tasks} clients={clients} />
-    </>
+    <PageShell>
+      <PageContainer>
+        <DashboardWrapper>
+          <TopSection>
+            <Card>
+              <DashboardActions />
+            </Card>
+            <Card>
+              <TasksOverviewChart tasks={tasks} />
+            </Card>
+          </TopSection>
+          <BottomSection>
+            <TaskList tasks={tasks} clients={clients} />
+          </BottomSection>
+        </DashboardWrapper>
+      </PageContainer>
+    </PageShell>
   );
 }

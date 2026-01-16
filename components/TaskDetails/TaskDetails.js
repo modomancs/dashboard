@@ -1,8 +1,27 @@
-import { ArrowLeft, Edit } from "lucide-react";
-import TaskCard from "../Tasks/TaskCard";
+import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/router";
 import { mutate } from "swr";
 import { useState } from "react";
+import {
+  BackButton,
+  ButtonRow,
+  DeleteButton,
+  DetailsCard,
+  DetailsInput,
+  DetailsP,
+  DetailsSection,
+  DetailsSelect,
+  DetailsTextarea,
+  DetailsTitle,
+  EditButton,
+  GhostButton,
+  InlineForm,
+  Label,
+  Page,
+  PrimaryButton,
+  TopBar,
+  Value,
+} from "./StyledTaskDetails";
 
 export default function TaskDetails({ task, clients, companies }) {
   const router = useRouter();
@@ -11,7 +30,7 @@ export default function TaskDetails({ task, clients, companies }) {
 
   const date = new Date(task.createdAt).toLocaleString();
 
-  async function hanldeTaskUpdate(event) {
+  async function handleTaskUpdate(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const updateData = Object.fromEntries(formData);
@@ -36,90 +55,123 @@ export default function TaskDetails({ task, clients, companies }) {
     router.push("/dashboard");
   }
   return (
-    <>
-      <ArrowLeft onClick={() => router.back()} />
-
-      <EditableItem onSubmit={hanldeTaskUpdate} display={<h1>{task.title}</h1>}>
-        <label htmlFor="title">Title: </label>
-        <input id="title" name="title" defaultValue={task.title} required />
-        <button type="submit">Save</button>
-      </EditableItem>
-
-      <EditableItem
-        onSubmit={hanldeTaskUpdate}
-        display={<p>Status: {task.status}</p>}
-      >
-        <label htmlFor="status">Update status:</label>
-        <select id="status" name="status" defaultValue={task.status}>
-          <option value="todo">To Do</option>
-          <option value="in_progress">In Progress</option>
-          <option value="done">Done</option>
-        </select>
-
-        <button type="submit">Save</button>
-      </EditableItem>
-
-      <EditableItem
-        onSubmit={hanldeTaskUpdate}
-        display={
-          <>
-            <strong>Description: </strong>
-            <p>{task.description}</p>
-          </>
-        }
-      >
-        <label htmlFor="description">Description</label>
-        <textarea
-          id="description"
-          name="description"
-          defaultValue={task.description}
-          rows={5}
-        />
-        <button type="submit">Save</button>
-      </EditableItem>
-
-      <EditableItem
-        onSubmit={hanldeTaskUpdate}
-        display={
-          <p>
-            <strong>Client: </strong>
-            {client ? client.name : "No client assigned"}
-          </p>
-        }
-      >
-        <label htmlFor="clientId">Client: </label>
-        <select
-          id="clientId"
-          name="clientId"
-          defaultValue={task.clientId}
-          required
+    <Page>
+      <TopBar>
+        <BackButton onClick={() => router.back()}>
+          <ArrowLeft size={18} />
+          Back
+        </BackButton>
+      </TopBar>
+      <DetailsCard>
+        <EditableItem
+          onSubmit={handleTaskUpdate}
+          display={
+            <>
+              <DetailsTitle>{task.title}</DetailsTitle>{" "}
+              <DetailsP>
+                {" "}
+                Company: {company ? company.name : "Unknown"} • Created: {date}{" "}
+              </DetailsP>
+            </>
+          }
         >
-          <option value="">Select client</option>
-          {clients?.map((client) => (
-            <option key={client._id} value={client._id}>
-              {client.name}
-            </option>
-          ))}
-        </select>
-        <button type="submit">Save</button>
-      </EditableItem>
-      <p>
-        <strong>Company: </strong>
-        {company ? company.name : "Unknown Company"}
-      </p>
+          <Label htmlFor="title">Title: </Label>
+          <DetailsInput
+            id="title"
+            name="title"
+            defaultValue={task.title}
+            required
+          />
+          <ButtonRow>
+            <PrimaryButton type="submit">Save</PrimaryButton>
+          </ButtonRow>
+        </EditableItem>
 
-      <p>{date}</p>
-      <button type="button" onClick={handleTaskDelete}>
-        Delete Task
-      </button>
-    </>
+        <DetailsSection>
+          <EditableItem
+            onSubmit={handleTaskUpdate}
+            display={
+              <>
+                <Label>Status</Label>
+                <Value>{task.status}</Value>
+              </>
+            }
+          >
+            <Label>Update status</Label>
+            <DetailsSelect name="status" defaultValue={task.status}>
+              <option value="todo">To Do</option>
+              <option value="in_progress">In Progress</option>
+              <option value="done">Done</option>
+            </DetailsSelect>
+            <ButtonRow>
+              <PrimaryButton type="submit">Save</PrimaryButton>
+            </ButtonRow>
+          </EditableItem>
+        </DetailsSection>
+
+        <DetailsSection>
+          <EditableItem
+            onSubmit={handleTaskUpdate}
+            display={
+              <>
+                <Label>Client: </Label>
+                <Value>{client ? client.name : "No client assigned"}</Value>
+              </>
+            }
+          >
+            <Label>Assign Client</Label>
+            <DetailsSelect
+              name="clientId"
+              defaultValue={task.clientId}
+              required
+            >
+              <option value="">Select client</option>
+              {clients?.map((client) => (
+                <option key={client._id} value={client._id}>
+                  {client.name}
+                </option>
+              ))}
+            </DetailsSelect>
+            <ButtonRow>
+              <PrimaryButton type="submit">Save</PrimaryButton>
+            </ButtonRow>
+          </EditableItem>
+        </DetailsSection>
+
+        <DetailsSection>
+          <EditableItem
+            onSubmit={handleTaskUpdate}
+            display={
+              <>
+                <Label>Description</Label>
+                <Value>{task.description}</Value>
+              </>
+            }
+          >
+            <Label htmlFor="description">Description</Label>
+            <DetailsTextarea
+              name="description"
+              defaultValue={task.description}
+              rows={5}
+            />
+            <ButtonRow>
+              <PrimaryButton type="submit">Save</PrimaryButton>
+            </ButtonRow>
+          </EditableItem>
+        </DetailsSection>
+
+        <DeleteButton type="button" onClick={handleTaskDelete}>
+          Delete Task
+        </DeleteButton>
+      </DetailsCard>
+    </Page>
   );
 }
 
 function EditableItem({ children, display, onSubmit }) {
-  const [toggleEdit, setToggleEdit] = useState(false);
+  const [editMode, setEditMode] = useState(false);
 
-  const closeEdit = () => setToggleEdit(false);
+  const closeEdit = () => setEditMode(false);
 
   const handleSubmit = async (event) => {
     if (onSubmit) {
@@ -128,14 +180,15 @@ function EditableItem({ children, display, onSubmit }) {
     }
   };
 
-  if (toggleEdit) {
+  if (editMode) {
     return (
       <>
-        <form onSubmit={handleSubmit}>{children}</form>
-
-        <button type="button" onClick={closeEdit}>
-          Cancel
-        </button>
+        <InlineForm onSubmit={handleSubmit}>{children}</InlineForm>
+        <ButtonRow>
+          <GhostButton type="button" onClick={closeEdit}>
+            Cancel
+          </GhostButton>
+        </ButtonRow>
       </>
     );
   }
@@ -144,9 +197,9 @@ function EditableItem({ children, display, onSubmit }) {
     <div>
       {display}
 
-      <button type="button" onClick={() => setToggleEdit(true)}>
+      <EditButton type="button" onClick={() => setEditMode(true)}>
         Edit
-      </button>
+      </EditButton>
     </div>
   );
 }

@@ -1,3 +1,6 @@
+import PageError from "@/components/Feedback/PageError";
+import { PageContainer, PageShell } from "@/components/Layout/StyledPageShell";
+import PageLoading from "@/components/Loading/PageLoading";
 import TaskDetails from "@/components/TaskDetails/TaskDetails";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -32,14 +35,20 @@ export default function TaskDetailsPage() {
     }
   }, [status, router]);
 
-  if (status === "loading") return <p>Loading...</p>;
+  if (status === "loading") return <PageLoading />;
   if (!session) return null;
 
   if (taskLoading || clientsLoading || companiesLoading) {
-    return <p>Loading data...</p>;
+    return <PageLoading />;
   }
   if (taskError || clientsError || companiesError) {
-    return <p>Failed to load data...</p>;
+    return <PageError />;
   }
-  return <TaskDetails task={task} clients={clients} companies={companies} />;
+  return (
+    <PageShell>
+      <PageContainer>
+        <TaskDetails task={task} clients={clients} companies={companies} />
+      </PageContainer>
+    </PageShell>
+  );
 }

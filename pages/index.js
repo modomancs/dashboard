@@ -1,34 +1,47 @@
 import {
-  Card,
-  Description,
-  LiList,
-  SectionTitle,
-  Title,
-  ULList,
-  Wrapper,
+  HomeActions,
+  HomeCard,
+  HomeDescription,
+  HomeList,
+  HomeListItem,
+  HomePrimaryLink,
+  HomeSecondaryLink,
+  HomeSectionTitle,
+  HomeTitle,
+  HomeWrapper,
 } from "@/components/HomePageStyles/StyledHomePage";
-import Link from "next/link";
+import { PageContainer, PageShell } from "@/components/Layout/StyledPageShell";
 
 export default function HomePage() {
   return (
-    <Wrapper>
-      <Card>
-        <Title>Task Manager</Title>
-        <Description>
-          A clean and modern task management application designed for companies
-          to organize clients, assign tasks, and track progress in one place.
-        </Description>
+    <PageShell>
+      <PageContainer>
+        <HomeWrapper>
+          <HomeCard>
+            <HomeTitle>Task Manager</HomeTitle>
+            <HomeDescription>
+              A clean and modern task management application designed for
+              companies to organize clients, assign tasks, and track progress in
+              one place.
+            </HomeDescription>
 
-        <SectionTitle>What is Task Manager used for?</SectionTitle>
-        <ULList>
-          <LiList>Create and manage tasks for clients</LiList>
-          <LiList>Track progress with simple task statuses</LiList>
-          <LiList>View detailed task information</LiList>
-          <LiList>Filter tasks by client and status</LiList>
-        </ULList>
-        <Link href="/login">Login</Link>
-        <Link href="/register">Register</Link>
-      </Card>
-    </Wrapper>
+            <HomeSectionTitle>What is Task Manager used for?</HomeSectionTitle>
+            <HomeList>
+              <HomeListItem>Create and manage tasks for clients</HomeListItem>
+              <HomeListItem>
+                Track progress with simple task statuses
+              </HomeListItem>
+              <HomeListItem>Open task details and update info</HomeListItem>
+              <HomeListItem>Manage clients inside your company</HomeListItem>
+            </HomeList>
+            <HomeActions>
+              <HomePrimaryLink href="/login">Login</HomePrimaryLink>
+
+              <HomeSecondaryLink href="/register">Register</HomeSecondaryLink>
+            </HomeActions>
+          </HomeCard>
+        </HomeWrapper>
+      </PageContainer>
+    </PageShell>
   );
 }

@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import { CardTitle } from "../HomePageStyles/StyledDashboard";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), {
   ssr: false,
@@ -20,6 +21,9 @@ export default function TasksOverviewChart({ tasks }) {
     labels: ["To Do", "In Progress", "Done"],
     colors: ["#ef4444", "#f59e0b", "#22c55e"],
     legend: {
+      labels: {
+        colors: "rgba(255,255,255,0.85)",
+      },
       position: "bottom",
       formatter: (seriesName, opts) => {
         return `${seriesName}: ${opts.w.globals.series[opts.seriesIndex]}`;
@@ -27,17 +31,22 @@ export default function TasksOverviewChart({ tasks }) {
     },
     dataLabels: {
       enabled: true,
+      style: {
+        colors: ["#ffffff"],
+        fontSize: "13px",
+        fontWeight: 600,
+      },
     },
   };
 
   return (
     <div>
-      <h2>Tasks overview</h2>
+      <CardTitle>Tasks overview</CardTitle>
       <ReactApexChart
         options={options}
         series={series}
         type="pie"
-        height={300}
+        height={360}
       />
     </div>
   );
