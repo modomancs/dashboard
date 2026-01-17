@@ -11,8 +11,21 @@ import {
   HomeWrapper,
 } from "@/components/HomePageStyles/StyledHomePage";
 import { PageContainer, PageShell } from "@/components/Layout/StyledPageShell";
+import PageLoading from "@/components/Loading/PageLoading";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export default function HomePage() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/dashboard");
+    }
+  }, [status, router]);
+  if (status === "loading") return <PageLoading />;
+  if (session) return <PageLoading />;
   return (
     <PageShell>
       <PageContainer>
