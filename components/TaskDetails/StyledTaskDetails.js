@@ -92,7 +92,7 @@ export const DetailsTextarea = styled.textarea`
 export const ButtonRow = styled.div`
   display: flex;
   gap: 10px;
-  align-items: center;
+  align-items: stretch;
 `;
 export const PrimaryButton = styled.button`
   background: rgba(255, 255, 255, 0.12);
@@ -108,10 +108,11 @@ export const PrimaryButton = styled.button`
 `;
 
 export const GhostButton = styled.button`
+  min-height: 40px;
+  padding: 10px 14px;
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.12);
   color: rgba(255, 255, 255, 0.85);
-  padding: 10px 12px;
   border-radius: 12px;
   cursor: pointer;
   &:hover {
@@ -131,14 +132,24 @@ export const EditButton = styled.button`
 `;
 
 export const DeleteButton = styled.button`
+  min-height: 40px;
+  padding: 10px 14px;
   background: rgba(239, 68, 68, 0.12);
   border: 1px solid rgba(239, 68, 68, 0.35);
   color: rgba(255, 255, 255, 0.92);
-  padding: 10px 12px;
   border-radius: 12px;
-  margin-top: 10px;
   cursor: pointer;
   &:hover {
     background: rgba(239, 68, 68, 0.18);
   }
+`;
+export const ConfirmText = styled.p`
+  margin: 8px 0 0 0;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.75);
+`;
+export const ConfirmTextDanger = styled.p`
+  margin: 8px 0 0 0;
+  font-size: 13px;
+  color: rgba(239, 68, 68, 0.9);
 `;

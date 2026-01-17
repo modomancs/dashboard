@@ -5,6 +5,8 @@ import { useState } from "react";
 import {
   BackButton,
   ButtonRow,
+  ConfirmText,
+  ConfirmTextDanger,
   DeleteButton,
   DetailsCard,
   DetailsInput,
@@ -27,6 +29,7 @@ export default function TaskDetails({ task, clients, companies }) {
   const router = useRouter();
   const client = clients.find((client) => client._id === task.clientId);
   const company = companies.find((company) => company._id === task.companyId);
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   const date = new Date(task.createdAt).toLocaleString();
 
@@ -160,9 +163,30 @@ export default function TaskDetails({ task, clients, companies }) {
           </EditableItem>
         </DetailsSection>
 
-        <DeleteButton type="button" onClick={handleTaskDelete}>
-          Delete Task
-        </DeleteButton>
+        {!confirmDelete ? (
+          <DetailsSection>
+            <DeleteButton type="button" onClick={() => setConfirmDelete(true)}>
+              Delete Task
+            </DeleteButton>
+          </DetailsSection>
+        ) : (
+          <>
+            <ConfirmTextDanger>
+              Are you sure you want to delete this task?
+            </ConfirmTextDanger>
+            <ButtonRow>
+              <DeleteButton type="button" onClick={handleTaskDelete}>
+                Confirm Delete
+              </DeleteButton>
+              <GhostButton
+                type="button"
+                onClick={() => setConfirmDelete(false)}
+              >
+                Cancel
+              </GhostButton>
+            </ButtonRow>
+          </>
+        )}
       </DetailsCard>
     </Page>
   );
