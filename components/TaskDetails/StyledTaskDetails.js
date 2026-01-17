@@ -143,11 +143,7 @@ export const DeleteButton = styled.button`
     background: rgba(239, 68, 68, 0.18);
   }
 `;
-export const ConfirmText = styled.p`
-  margin: 8px 0 0 0;
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.75);
-`;
+
 export const ConfirmTextDanger = styled.p`
   margin: 8px 0 0 0;
   font-size: 13px;
