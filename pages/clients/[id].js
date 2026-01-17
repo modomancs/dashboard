@@ -27,11 +27,18 @@ import {
 import { PageContainer, PageShell } from "@/components/Layout/StyledPageShell";
 import PageLoading from "@/components/Loading/PageLoading";
 import PageError from "@/components/Feedback/PageError";
+import {
+  ButtonRow,
+  ConfirmTextDanger,
+  DeleteButton,
+  DetailsSection,
+  GhostButton,
+} from "@/components/TaskDetails/StyledTaskDetails";
 
 export default function ClientPage() {
   const router = useRouter();
   const { id } = router.query;
-
+  const [confirmDelete, setConfirmDelete] = useState(false);
   const { data: session, status } = useSession();
   const {
     data: client,
@@ -152,9 +159,33 @@ export default function ClientPage() {
             <TaskList tasks={clientTasks} clients={clients} />
           </ClientsGlassCard>
 
-          <ClientsDeleteButton type="button" onClick={handleClientDelete}>
-            Delete Client
-          </ClientsDeleteButton>
+          <DetailsSection>
+            {!confirmDelete ? (
+              <ClientsDeleteButton
+                type="button"
+                onClick={() => setConfirmDelete(true)}
+              >
+                Delete Client
+              </ClientsDeleteButton>
+            ) : (
+              <>
+                <ConfirmTextDanger>
+                  Are you sure you want to delete this client?
+                </ConfirmTextDanger>
+                <ButtonRow>
+                  <DeleteButton type="button" onClick={handleClientDelete}>
+                    Confirm Delete
+                  </DeleteButton>
+                  <GhostButton
+                    type="button"
+                    onClick={() => setConfirmDelete(false)}
+                  >
+                    Cancel
+                  </GhostButton>
+                </ButtonRow>
+              </>
+            )}
+          </DetailsSection>
         </ClientsDetailsPage>
       </PageContainer>
     </PageShell>
