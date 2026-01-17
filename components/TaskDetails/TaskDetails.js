@@ -5,7 +5,6 @@ import { useState } from "react";
 import {
   BackButton,
   ButtonRow,
-  ConfirmText,
   ConfirmTextDanger,
   DeleteButton,
   DetailsCard,
