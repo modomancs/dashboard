@@ -13,6 +13,13 @@ const taskSchema = new Schema({
     type: String,
     required: true,
   },
+  priority: {
+    type: String,
+    required: true,
+  },
+  dueDate: {
+    type: Date,
+  },
   clientId: {
     type: Schema.Types.ObjectId,
     ref: "Client",
