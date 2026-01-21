@@ -36,6 +36,8 @@ export default function CreateTaskForm({ clients }) {
     const taskData = Object.fromEntries(formData);
     taskData.createdAt = new Date().toISOString();
     taskData.companyId = session.companyId;
+    if (!taskData.dueDate) delete taskData.dueDate;
+    if (!taskData.description) delete taskData.description;
 
     const response = await fetch("/api/tasks", {
       method: "POST",
@@ -74,6 +76,25 @@ export default function CreateTaskForm({ clients }) {
             <option value="in_progress">In Progress</option>
             <option value="done">Done</option>
           </NewTaskSelect>
+        </NewTaskField>
+
+        <NewTaskField htmlFor="priority">
+          Priority
+          <NewTaskSelect
+            id="priority"
+            name="priority"
+            defaultValue="medium"
+            required
+          >
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </NewTaskSelect>
+        </NewTaskField>
+
+        <NewTaskField htmlFor="dueDate">
+          Due Date
+          <NewTaskInput id="dueDate" name="dueDate" type="date" />
         </NewTaskField>
 
         <NewTaskField htmlFor="clientId">
