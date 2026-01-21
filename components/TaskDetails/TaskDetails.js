@@ -72,7 +72,8 @@ export default function TaskDetails({ task, clients, companies }) {
               <DetailsTitle>{task.title}</DetailsTitle>{" "}
               <DetailsP>
                 {" "}
-                Company: {company ? company.name : "Unknown"} • Created: {date}{" "}
+                Company: {company ? company.name : "Unknown"} • Created:{" "}
+                {date}{" "}
               </DetailsP>
             </>
           }
@@ -105,6 +106,57 @@ export default function TaskDetails({ task, clients, companies }) {
               <option value="in_progress">In Progress</option>
               <option value="done">Done</option>
             </DetailsSelect>
+            <ButtonRow>
+              <PrimaryButton type="submit">Save</PrimaryButton>
+            </ButtonRow>
+          </EditableItem>
+        </DetailsSection>
+
+        <DetailsSection>
+          <EditableItem
+            onSubmit={handleTaskUpdate}
+            display={
+              <>
+                <Label>Priority</Label>
+                <Value>{task.priority || "medium"}</Value>
+              </>
+            }
+          >
+            <Label>Update priority</Label>
+            <DetailsSelect
+              name="priority"
+              defaultValue={task.priority || "medium"}
+            >
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </DetailsSelect>
+            <ButtonRow>
+              <PrimaryButton type="submit">Save</PrimaryButton>
+            </ButtonRow>
+          </EditableItem>
+        </DetailsSection>
+
+        <DetailsSection>
+          <EditableItem
+            onSubmit={handleTaskUpdate}
+            display={
+              <>
+                <Label>Due date</Label>
+                <Value>
+                  {task.dueDate
+                    ? new Date(task.dueDate).toLocaleDateString()
+                    : "No due date"}
+                </Value>
+              </>
+            }
+          >
+            <Label>Update due date</Label>
+            <DetailsInput
+              name="dueDate"
+              type="date"
+              defaultValue={task.dueDate ? task.dueDate.slice(0, 10) : ""}
+            />
             <ButtonRow>
               <PrimaryButton type="submit">Save</PrimaryButton>
             </ButtonRow>

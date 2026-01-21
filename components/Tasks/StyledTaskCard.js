@@ -9,7 +9,10 @@ export const TaskCardLink = styled(Link)`
   border: 1px solid rgba(255, 255, 255, 0.08);
   color: rgba(255, 255, 255, 0.92);
   text-decoration: none;
-  transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease,
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease,
+    background 120ms ease,
     border-color 120ms ease;
   &:hover {
     transform: translateY(-2px);
@@ -30,4 +33,23 @@ export const TaskMeta = styled.p`
   margin: 0;
   font-size: 13px;
   color: rgba(255, 255, 255, 0.65);
+`;
+
+export const TaskMetaRow = styled.div`
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+`;
+
+export const Pill = styled.span`
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 `;
